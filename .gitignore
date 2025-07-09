@@ -1,0 +1,13 @@
+*.egg-info/
+**/__pycache__/
+dist/
+*.py[cod]
+*.pyc
+*.so
+.venv/
+.coverage
+coverage.xml
+.pytest_cache/
+.idea/
+recording/
+build/
