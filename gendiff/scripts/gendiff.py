@@ -1,12 +1,8 @@
-import json
 import argparse
+from gendiff.modules import open_json, generate_diff
 
 
-def open_json(filepath):
-    with open(filepath) as f:
-        return json.load(f)
-
-def main():
+def start_gendiff_cli():
     parser = argparse.ArgumentParser(
         description='''Compares twoconfiguration
         files and shows a difference.'''
@@ -16,13 +12,16 @@ def main():
     parser.add_argument('second_file', type=str)
     parser.add_argument('-f', '--format', help='set format of output')
 
-    args = parser.parse_args()
+    return parser.parse_args()
 
-    print(
-        open_json(args.first_file),
-        open_json(args.second_file),
-        sep='\n'
-    )
+
+def main():
+    args = start_gendiff_cli()
+    first_dict = open_json(args.first_file)
+    second_dict = open_json(args.second_file)
+
+    x = generate_diff(first_dict, second_dict)
+    print(x)
 
 
 if __name__ == '__main__':
