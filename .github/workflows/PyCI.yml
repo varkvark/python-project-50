@@ -36,6 +36,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=hexlet-project_python-package
-            -Dsonar.organization=hexlet-project
+            -Dsonar.projectKey=varkvark_python-project-50
+            -Dsonar.organization=python-project-50
             -Dsonar.python.coverage.reportPaths=coverage.xml
