@@ -1,5 +1,6 @@
 import argparse
-from gendiff.modules import open_json, generate_diff
+
+from gendiff.modules import generate_diff
 
 
 def start_gendiff_cli():
@@ -17,10 +18,11 @@ def start_gendiff_cli():
 
 def main():
     args = start_gendiff_cli()
-    first_dict = open_json(args.first_file)
-    second_dict = open_json(args.second_file)
 
-    x = generate_diff(first_dict, second_dict)
+    first_file = args.first_file
+    second_file = args.second_file
+
+    x = generate_diff(first_file, second_file)
     print(x)
 
 
