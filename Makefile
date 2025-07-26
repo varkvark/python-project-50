@@ -10,5 +10,11 @@ package-install:
 package-reinstall:
 	uv tool install --force dist/*.whl
 
+lint:
+	uv run ruff check
+
+test:
+	uv run pytest
+
 clear-cache:
-	find ~/python_projects/python-project-50/ -type d -name "__pycache__" -exec rm -r {} +
+	find . -type d \( -name '__pycache__' -o -name '.pytest_cache' -o -name '.ruff_cache' \) -exec rm -r {} +
