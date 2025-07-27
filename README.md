@@ -5,5 +5,8 @@
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=varkvark_python-project-50&metric=coverage)](https://sonarcloud.io/summary/new_code?id=varkvark_python-project-50)
 
-### Gendiff asciinema
+### Gendiff
 [![asciicast](https://asciinema.org/a/d08uyql8EDjHQabTfAbzmopb7.svg)](https://asciinema.org/a/d08uyql8EDjHQabTfAbzmopb7)
+
+### Gendiff flat json/yaml
+[![asciicast](https://asciinema.org/a/nN7cywsfEohjhuqBgFwxt6D3a.svg)](https://asciinema.org/a/nN7cywsfEohjhuqBgFwxt6D3a)
