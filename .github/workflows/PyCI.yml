@@ -30,6 +30,10 @@ jobs:
         run: |
           make test
 
+      - name: Run pytest-cov
+        run: |
+          make test-coverage
+
       - name: SonarQubeScan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
