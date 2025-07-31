@@ -48,7 +48,7 @@ def compare_dicts(first_dict, second_dict):
         if first_value == second_value:
             result[f'    {key}'] = first_value
         else:
-            if not isinstance(first_value, dict) or not isinstance(second_value, dict):
+            if not isinstance(first_value, dict) or not isinstance(second_value, dict):  # noqa: E501
                 if key in first_dict:
                     result[f'  - {key}'] = first_value
                 if key in second_dict:
