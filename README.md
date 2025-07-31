@@ -10,3 +10,6 @@
 
 ### Gendiff flat json/yaml
 [![asciicast](https://asciinema.org/a/nN7cywsfEohjhuqBgFwxt6D3a.svg)](https://asciinema.org/a/nN7cywsfEohjhuqBgFwxt6D3a)
+
+### Gendiff recursive json/yaml
+[![asciicast](https://asciinema.org/a/WnXfAYbBfj3mxTqcIWctIPlBv.svg)](https://asciinema.org/a/WnXfAYbBfj3mxTqcIWctIPlBv)
