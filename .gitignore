@@ -5,8 +5,6 @@ dist/
 *.pyc
 *.so
 .venv/
-.coverage
-coverage.xml
 .pytest_cache/
 .idea/
 recording/
