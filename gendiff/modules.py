@@ -14,10 +14,16 @@ def open_json_yaml(filepath):
 
 
 def sorted_dict(new_dict):
-    result = dict(
-        sorted(new_dict.items(), key=lambda key: key[0][4])
-    )
-
+    prefix = {'    ', '  + ', '  - '}
+    for key in new_dict:
+        if key[0:4] in prefix:
+            result = dict(
+                sorted(new_dict.items(), key=lambda key: key[0][4:])
+            )
+        else:
+            result = dict(
+                sorted(new_dict.items(), key=lambda key: key[0])
+            )
     return result
 
 
@@ -30,26 +36,75 @@ def dict_to_str(new_dict):
     return result
 
 
-def generate_diff(first_file, second_file):
+def compare_dicts(first_dict, second_dict):
     result = {}
 
-    first_json = open_json_yaml(first_file)
-    second_json = open_json_yaml(second_file)
-
-    all_keys = set(first_json) | set(second_json)
+    all_keys = set(first_dict) | set(second_dict)
 
     for key in all_keys:
-        value_in_first = first_json.get(key)
-        value_in_second = second_json.get(key)
+        first_value = first_dict.get(key)
+        second_value = second_dict.get(key)
 
-        if value_in_first == value_in_second:
-            result[f'    {key}'] = value_in_first
+        if first_value == second_value:
+            result[f'    {key}'] = first_value
         else:
-            if key in first_json:
-                result[f'  - {key}'] = value_in_first
-            if key in second_json:
-                result[f'  + {key}'] = value_in_second
+            if not isinstance(first_value, dict) or not isinstance(second_value, dict):
+                if key in first_dict:
+                    result[f'  - {key}'] = first_value
+                if key in second_dict:
+                    result[f'  + {key}'] = second_value
+            else:
+                result[f'    {key}'] = compare_dicts(first_value, second_value)
 
-    result = sorted_dict(result)
+    return sorted_dict(result)
 
-    return dict_to_str(result)
+
+def diff_stylish(new_dict):
+    count = 0
+
+    def inner(inner_dict):
+        spaces = '    '
+        prefix = {'    ', '  + ', '  - '}
+        result = '{\n'
+        nonlocal count
+
+        for key, value in inner_dict.items():
+            if key[:4] in prefix:
+                result += f'{spaces * count}{key}: '
+            else:
+                result += f'{spaces * count}{spaces}{key}: '
+
+            if not isinstance(value, dict):
+                result += f'{value}\n'
+            else:
+                count += 1
+                result += f'{inner(value)}\n'
+        result += f'{spaces * count}' + '}'
+        count -= 1
+        return result
+
+    result = inner(new_dict)
+
+    return result
+
+
+def format_text(text):
+    replace = {
+        'True': 'true',
+        'False': 'false',
+        'None': 'null'
+    }
+    for old, new in replace.items():
+        text = text.replace(old, new)
+    return text
+
+
+def generate_diff(first_file, second_file, format_name='stylish'):
+    first_dict = open_json_yaml(first_file)
+    second_dict = open_json_yaml(second_file)
+
+    result = compare_dicts(first_dict, second_dict)
+
+    if format_name == 'stylish':
+        result = diff_stylish(result)
+        return format_text(result)
