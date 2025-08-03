@@ -3,6 +3,10 @@ import json
 import yaml
 from yaml.loader import SafeLoader
 
+from gendiff.formatters.json_formatter import diff_json
+from gendiff.formatters.plain_formatter import diff_plain
+from gendiff.formatters.stylish_formatter import diff_stylish
+
 
 def open_json_yaml(filepath):
     if filepath.endswith('.json'):
@@ -24,15 +28,6 @@ def sorted_dict(new_dict):
             result = dict(
                 sorted(new_dict.items(), key=lambda key: key[0])
             )
-    return result
-
-
-def dict_to_str(new_dict):
-    result = '{\n'
-    for key, value in new_dict.items():
-        new_string = f'{key}: {value}\n'
-        result += new_string
-    result += '}'
     return result
 
 
@@ -59,44 +54,13 @@ def compare_dicts(first_dict, second_dict):
     return sorted_dict(result)
 
 
-def diff_stylish(new_dict):
-    count = 0
-
-    def inner(inner_dict):
-        spaces = '    '
-        prefix = {'    ', '  + ', '  - '}
-        result = '{\n'
-        nonlocal count
-
-        for key, value in inner_dict.items():
-            if key[:4] in prefix:
-                result += f'{spaces * count}{key}: '
-            else:
-                result += f'{spaces * count}{spaces}{key}: '
-
-            if not isinstance(value, dict):
-                result += f'{value}\n'
-            else:
-                count += 1
-                result += f'{inner(value)}\n'
-        result += f'{spaces * count}' + '}'
-        count -= 1
-        return result
-
-    result = inner(new_dict)
-
-    return result
-
-
-def format_text(text):
-    replace = {
-        'True': 'true',
-        'False': 'false',
-        'None': 'null'
-    }
-    for old, new in replace.items():
-        text = text.replace(old, new)
-    return text
+def format_text(string):
+    string = (
+        string.replace('True', 'true')
+        .replace('False', 'false')
+        .replace('None', 'null')
+    )
+    return string
 
 
 def generate_diff(first_file, second_file, format_name='stylish'):
@@ -107,4 +71,11 @@ def generate_diff(first_file, second_file, format_name='stylish'):
 
     if format_name == 'stylish':
         result = diff_stylish(result)
-        return format_text(result)
+    elif format_name == 'plain':
+        result = diff_plain(result)
+    elif format_name == 'json':
+        result = diff_json(result)
+    else:
+        raise ValueError("Unsupported format")
+
+    return format_text(result)
