@@ -13,3 +13,9 @@
 
 ### Gendiff recursive json/yaml
 [![asciicast](https://asciinema.org/a/WnXfAYbBfj3mxTqcIWctIPlBv.svg)](https://asciinema.org/a/WnXfAYbBfj3mxTqcIWctIPlBv)
+
+### Gendiff plain json/yaml
+[![asciicast](https://asciinema.org/a/WOW0TJ6XroeI8Rlv92M0Kphrg.svg)](https://asciinema.org/a/WOW0TJ6XroeI8Rlv92M0Kphrg)
+
+### Gendiff json json/yaml
+[![asciicast](https://asciinema.org/a/5E0ziG7HiHy4cXDTF2l7vxnhy.svg)](https://asciinema.org/a/5E0ziG7HiHy4cXDTF2l7vxnhy)
