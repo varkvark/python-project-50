@@ -11,3 +11,5 @@ recording/
 build/
 demo.cast
 .ruff_cache
+.coverage
+coverage.xml
